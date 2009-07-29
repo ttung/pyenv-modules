@@ -11,7 +11,7 @@ class Module(pyenv.Module):
             if (module_name.startswith('com.facebook.libmcc')):
                 raise pyenv.ModulePreloadError("Cannot load two libmcc modules at the same time")
 
-        return []
+        return ["com.facebook.libch.trunk"]
 
 
     def load(self, env, shell):

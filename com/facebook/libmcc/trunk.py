@@ -28,16 +28,17 @@ class Module(pyenv.Module):
         libmcc_pd_base = os.path.join(home, "software", "%s-%s" % (machtype, ostype),
                                       "libmcc-trunk") # platform-dependent
 
-        # python extra paths are expanded in ~/software/python/sitecustomize.py
-        shell.append_path(os.path.join(libmcc_pi_base, "lib"), "PYTHON_EXTRA_PATHS",
-                          check_path = shell.ENFORCE_PATH)
-        shell.append_path(os.path.join(libmcc_pi_base, "include"), "INCLUDE",
-                          check_path = shell.ENFORCE_PATH)
+	shell.append_compiler_flag(os.path.join(libmcc_pi_base, "include"),
+                                   "CPPFLAGS",
+                                   prefix = "-I",
+                                   path_checking = pyenv.ShellConstants.ENFORCE_PATH)
+        shell.append_path(os.path.join(libmcc_pi_base, "lib"), "PYTHON_EXTRA_PATHS")
 
-        shell.append_path(os.path.join(libmcc_pd_base, "lib"), "LD_LIBRARY_PATH",
-                          check_path = shell.ENFORCE_PATH)
-        shell.append_path(os.path.join(libmcc_pd_base, "lib"), "LIB",
-                          check_path = shell.ENFORCE_PATH)
+        shell.append_path(os.path.join(libmcc_pd_base, "lib"), "LD_LIBRARY_PATH")
+	shell.append_compiler_flag(os.path.join(libmcc_pd_base, "lib"),
+                                   "LDFLAGS",
+                                   prefix = "-L",
+                                   path_checking = pyenv.ShellConstants.ENFORCE_PATH)
 
 
     def unload(self, env, shell):

@@ -11,7 +11,7 @@ class Module(pyenv.Module):
             if (module_name.startswith('com.facebook.libasox')):
                 raise pyenv.ModulePreloadError("Cannot load two libasox modules at the same time")
 
-        return []
+        return ["oss.libevent.1_3c"]
 
 
     def load(self, env, shell):

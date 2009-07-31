@@ -6,9 +6,13 @@ class Module(pyenv.Module):
 
 
     def preload(self, env):
+        import re
+
+        cre = re.compile(r"com\.facebook\.libmc(\.|$)")
+
         # conflict checking
         for module_name in env.loaded_modules:
-            if (module_name.startswith('com.facebook.libmc')):
+            if (cre.match(module_name)):
                 raise pyenv.ModulePreloadError("Cannot load two libmc modules at the same time")
 
         return ["com.facebook.libfbi"]

@@ -24,9 +24,9 @@ class Module(pyenv.Module):
             ostype is None):
             raise pyenv.ModuleLoadError("Cannot determine machine type or os type")
 
-        libch_pi_base = os.path.join(home, "software", "libch-trunk") # platform-independent
+        libch_pi_base = os.path.join(home, "software", "libch-2.0") # platform-independent
         libch_pd_base = os.path.join(home, "software", "%s-%s" % (machtype, ostype),
-                                     "libch-trunk") # platform-dependent
+                                     "libch-2.0") # platform-dependent
 
 	shell.append_compiler_flag(os.path.join(libch_pi_base, "include"),
                                    "CPPFLAGS",

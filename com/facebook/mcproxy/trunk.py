@@ -8,12 +8,12 @@ class Module(pyenv.Module):
     def preload(self, env):
         import re
 
-        cre = re.compile(r"com\.facebook\.memcached(\.|$)")
+        cre = re.compile(r"com\.facebook\.mcproxy(\.|$)")
 
         # conflict checking
         for module_name in env.loaded_modules:
             if (cre.match(module_name)):
-                raise pyenv.ModulePreloadError("Cannot load two memcached modules at the same time")
+                raise pyenv.ModulePreloadError("Cannot load two mcproxy modules at the same time")
 
         return ["oss.libevent.1_3c"]
 
@@ -28,14 +28,13 @@ class Module(pyenv.Module):
             ostype is None):
             raise pyenv.ModuleLoadError("Cannot determine machine type or os type")
 
-        memcached_pi_base = os.path.join(home, "software", "memcached") # platform-independent
-        memcached_pd_base = os.path.join(home, "software", "%s-%s" % (machtype, ostype),
-                                         "memcached") # platform-dependent
+        # no platform-independent files for mcproxy
+        # mcproxy_pi_base = os.path.join(home, "software", "mcproxy") # platform-independent
+        mcproxy_pd_base = os.path.join(home, "software", "%s-%s" % (machtype, ostype),
+                                         "mcproxy-trunk") # platform-dependent
 
         # path needs to go in front since on FB machines, mcproxy is already in the path.
-        shell.prepend_path(os.path.join(memcached_pi_base, "share", "man"), "MANPATH")
-
-        shell.prepend_path(os.path.join(memcached_pd_base, "bin"), "PATH")
+        shell.prepend_path(os.path.join(mcproxy_pd_base, "bin"), "PATH")
 
 
     def unload(self, env, shell):

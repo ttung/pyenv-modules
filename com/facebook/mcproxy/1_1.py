@@ -31,9 +31,10 @@ class Module(pyenv.Module):
         # no platform-independent files for mcproxy
         # mcproxy_pi_base = os.path.join(home, "software", "mcproxy") # platform-independent
         mcproxy_pd_base = os.path.join(home, "software", "%s-%s" % (machtype, ostype),
-                                         "mcproxy") # platform-dependent
+                                         "mcproxy-1.1") # platform-dependent
 
-        shell.append_path(os.path.join(mcproxy_pd_base, "bin"), "PATH")
+        # path needs to go in front since on FB machines, mcproxy is already in the path.
+        shell.prepend_path(os.path.join(mcproxy_pd_base, "bin"), "PATH")
 
 
     def unload(self, env, shell):

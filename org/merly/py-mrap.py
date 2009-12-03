@@ -20,7 +20,7 @@ class Module(pyenv.Module):
 
         py_mrap_base = os.path.join(home, "software", "py-mrap")
         # python extra paths are expanded in ~/software/python/sitecustomize.py
-        shell.append_path(os.path.join(py_mrap_base, "lib"), "PYTHON_EXTRA_PATHS")
+        shell.append_path(os.path.join(py_mrap_base, "lib"), "PYTHON_EXTRA_PATH")
 
 
     def unload(self, env, shell):

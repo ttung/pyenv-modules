@@ -32,7 +32,7 @@ class Module(pyenv.Module):
                                    "CPPFLAGS",
                                    prefix = "-I",
                                    path_checking = pyenv.ShellConstants.ENFORCE_PATH)
-        shell.append_path(os.path.join(libfbi_pi_base, "lib"), "PYTHON_EXTRA_PATHS")
+        shell.append_path(os.path.join(libfbi_pi_base, "lib"), "PYTHON_EXTRA_PATH")
         shell.add_env("ACLOCAL", "aclocal -I %s" % os.path.join(libfbi_pi_base, "share", "aclocal"))
 
         shell.append_path(os.path.join(libfbi_pd_base, "lib"), "LD_LIBRARY_PATH")

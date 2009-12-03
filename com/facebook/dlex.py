@@ -20,7 +20,7 @@ class Module(pyenv.Module):
 
         dlex_base = os.path.join(home, "software", "dlex")
 
-        shell.append_path(os.path.join(dlex_base, "lib"), "PYTHON_EXTRA_PATHS")
+        shell.append_path(os.path.join(dlex_base, "lib"), "PYTHON_EXTRA_PATH")
         shell.append_path(os.path.join(dlex_base, "bin"), "PATH")
 
 

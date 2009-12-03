@@ -32,7 +32,7 @@ class Module(pyenv.Module):
                                    "CPPFLAGS",
                                    prefix = "-I",
                                    path_checking = pyenv.ShellConstants.ENFORCE_PATH)
-        shell.append_path(os.path.join(libmcc_pi_base, "lib"), "PYTHON_EXTRA_PATHS")
+        shell.append_path(os.path.join(libmcc_pi_base, "lib"), "PYTHON_EXTRA_PATH")
 
         shell.append_path(os.path.join(libmcc_pd_base, "lib"), "LD_LIBRARY_PATH")
 	shell.append_compiler_flag(os.path.join(libmcc_pd_base, "lib"),

@@ -20,7 +20,7 @@ class Module(pyenv.Module):
 
         pexpect_base = os.path.join(home, "software", "pexpect-2.3")
         # python extra paths are expanded in ~/software/python/sitecustomize.py
-        shell.append_path(os.path.join(pexpect_base, "lib"), "PYTHON_EXTRA_PATHS",
+        shell.append_path(os.path.join(pexpect_base, "lib"), "PYTHON_EXTRA_PATH",
                           check_path = pyenv.ShellConstants.ENFORCE_PATH)
 
 

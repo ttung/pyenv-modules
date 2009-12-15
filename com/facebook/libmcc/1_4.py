@@ -28,17 +28,29 @@ class Module(pyenv.Module):
         libmcc_pd_base = os.path.join(home, "software", "%s-%s" % (machtype, ostype),
                                       "libmcc-1.4") # platform-dependent
 
-	shell.append_compiler_flag(os.path.join(libmcc_pi_base, "include"),
+        shell.append_compiler_flag(os.path.join(libmcc_pi_base, "include"),
                                    "CPPFLAGS",
                                    prefix = "-I",
                                    path_checking = pyenv.ShellConstants.ENFORCE_PATH)
         shell.append_path(os.path.join(libmcc_pi_base, "lib"), "PYTHON_EXTRA_PATH")
+        shell.append_path(os.path.join(libmcc_pi_base, "share", "aclocal"), "ACLOCAL_PATH")
 
         shell.append_path(os.path.join(libmcc_pd_base, "lib"), "LD_LIBRARY_PATH")
-	shell.append_compiler_flag(os.path.join(libmcc_pd_base, "lib"),
+        shell.append_compiler_flag(os.path.join(libmcc_pd_base, "lib"),
                                    "LDFLAGS",
                                    prefix = "-L",
                                    path_checking = pyenv.ShellConstants.ENFORCE_PATH)
+        shell.append_path(os.path.join(libmcc_pd_base, "lib", "pkgconfig"), "PKG_CONFIG_PATH")
+
+        # aclocal is weird.  even on a remove, we may need to forcibly set it.
+        if ("ACLOCAL_PATH" in shell.paths and
+            len(shell.paths['ACLOCAL_PATH']) != 0):
+            shell.environment_variables['ACLOCAL'] = ("aclocal %s" % 
+                                                      (" ".join(["-I %s" % path
+                                                                 for path in shell.paths['ACLOCAL_PATH']])))
+        else:
+            # this will remove it.
+            shell.add_env("ACLOCAL", None)
 
 
     def unload(self, env, shell):

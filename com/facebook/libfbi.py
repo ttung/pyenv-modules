@@ -33,13 +33,24 @@ class Module(pyenv.Module):
                                    prefix = "-I",
                                    path_checking = pyenv.ShellConstants.ENFORCE_PATH)
         shell.append_path(os.path.join(libfbi_pi_base, "lib"), "PYTHON_EXTRA_PATH")
-        shell.add_env("ACLOCAL", "aclocal -I %s" % os.path.join(libfbi_pi_base, "share", "aclocal"))
+        shell.append_path(os.path.join(libfbi_pi_base, "share", "aclocal"), "ACLOCAL_PATH")
 
         shell.append_path(os.path.join(libfbi_pd_base, "lib"), "LD_LIBRARY_PATH")
-	shell.append_compiler_flag(os.path.join(libfbi_pd_base, "lib"),
+        shell.append_compiler_flag(os.path.join(libfbi_pd_base, "lib"),
                                    "LDFLAGS",
                                    prefix = "-L",
                                    path_checking = pyenv.ShellConstants.ENFORCE_PATH)
+        shell.append_path(os.path.join(libfbi_pd_base, "lib", "pkgconfig"), "PKG_CONFIG_PATH")
+
+        # aclocal is weird.  even on a remove, we may need to forcibly set it.
+        if ("ACLOCAL_PATH" in shell.paths and
+            len(shell.paths['ACLOCAL_PATH']) != 0):
+            shell.environment_variables['ACLOCAL'] = ("aclocal %s" %
+                                                      (" ".join(["-I %s" % path
+                                                                 for path in shell.paths['ACLOCAL_PATH']])))
+        else:
+            # this will remove it.
+            shell.add_env("ACLOCAL", None)
 
 
     def unload(self, env, shell):

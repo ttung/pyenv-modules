@@ -41,7 +41,7 @@ class Module(pyenv.Module):
         shell.reset_path("INCLUDE_PATH")
         shell.reset_path("LIB_PATH")
 
-        prefixes = [{'path': os.path.join(home, "software"), 
+        prefixes = [{'path': os.path.join(home, "software"),
                      'development_paths': True}]
         for mt in compat_machtype:
             for ost in compat_ostype:
@@ -55,7 +55,7 @@ class Module(pyenv.Module):
                 {'path': os.path.join(os.sep, "usr"), 'sbin_paths': True},
                 {'path': os.path.join(os.sep, "opt"), 'sbin_paths': True},
                 {'path': os.path.join(os.sep), 'sbin_paths': True},
-                {'path': os.path.join(os.sep), 'sbin_paths': True},
+                {'path': os.path.join(os.sep, "usr", "X11R6"), 'sbin_paths': True},
                 ])
 
         for prefix_data in prefixes:
@@ -89,7 +89,7 @@ class Module(pyenv.Module):
                 if machtype == "x86_64":
                     shell.append_path(os.path.join(prefix, "lib64"), "LIB_PATH",
                                       pyenv.ShellConstants.VALIDATE_PATH)
-                shell.append_path(os.path.join(prefix, "python"), "PYTHON_PATH", pyenv.ShellConstants.VALIDATE_PATH)
+                shell.append_path(os.path.join(prefix, "python"), "PYTHONPATH", pyenv.ShellConstants.VALIDATE_PATH)
 
 
     def unload(self, env, shell):

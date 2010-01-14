@@ -89,7 +89,7 @@ class Module(pyenv.Module):
                 if machtype == "x86_64":
                     shell.append_path(os.path.join(prefix, "lib64"), "LIB_PATH",
                                       pyenv.ShellConstants.VALIDATE_PATH)
-                shell.append_path(os.path.join(prefix, "python"), "PYTHON_PATH", pyenv.ShellConstants.VALIDATE_PATH)
+                shell.append_path(os.path.join(prefix, "python"), "PYTHONPATH", pyenv.ShellConstants.VALIDATE_PATH)
 
 
     def unload(self, env, shell):

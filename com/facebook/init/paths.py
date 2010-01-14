@@ -15,6 +15,8 @@ class Module(pyenv.Module):
 
 
     def load(self, env, shell):
+        import os
+
         # path
         engshare = os.path.join(os.sep, "home", "engshare")
         shell.append_path(os.path.join(engshare, "admin", "facebook", "scripts"),

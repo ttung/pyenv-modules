@@ -15,18 +15,6 @@ class Module(pyenv.Module):
 
 
     def load(self, env, shell):
-        # quick and dirty search for libevent, if present, then we don't need to do anything.
-        try:
-            import ctypes.util
-
-            lib = ctypes.util.find_library('event')
-            if (lib is None):
-                raise Exception("cannot find libevent")
-        except:
-            pass
-        else:
-            return
-
         import os
         home = os.path.expanduser("~")
         machtype = os.getenv("MACHTYPE")

@@ -11,7 +11,7 @@ class Module(pyenv.Module):
             if (module_name.startswith('com.facebook.libmcc')):
                 raise pyenv.ModulePreloadError("Cannot load two libmcc modules at the same time")
 
-        return ["oss.libevent.1_3c"]
+        return ["oss.libevent-1.3c"]
 
 
     def load(self, env, shell):

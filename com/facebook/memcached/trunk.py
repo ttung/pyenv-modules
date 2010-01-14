@@ -15,7 +15,7 @@ class Module(pyenv.Module):
             if (cre.match(module_name)):
                 raise pyenv.ModulePreloadError("Cannot load two memcached modules at the same time")
 
-        return ["oss.libevent.1_3c"]
+        return ["oss.libevent-1.3c"]
 
 
     def load(self, env, shell):

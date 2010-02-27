@@ -8,10 +8,10 @@ class Module(pyenv.Module):
     def preload(self, env):
         # conflict checking
         for module_name in env.loaded_modules:
-            if (module_name.startswith('com.facebook.libfbi')):
-                raise pyenv.ModulePreloadError("Cannot load two libfbi modules at the same time")
+            if (module_name.startswith('com.facebook.libmcc')):
+                raise pyenv.ModulePreloadError("Cannot load two libmcc modules at the same time")
 
-        return []
+        return ["oss.libevent-1.3c"]
 
 
     def load(self, env, shell):
@@ -24,28 +24,27 @@ class Module(pyenv.Module):
             ostype is None):
             raise pyenv.ModuleLoadError("Cannot determine machine type or os type")
 
-        libfbi_pi_base = os.path.join(home, "software", "libfbi") # platform-independent
-        libfbi_pd_base = os.path.join(home, "software", "%s-%s" % (machtype, ostype),
-                                     "libfbi") # platform-dependent
+        libmcc_pi_base = os.path.join(home, "software", "libmcc-1.5") # platform-independent
+        libmcc_pd_base = os.path.join(home, "software", "%s-%s" % (machtype, ostype),
+                                      "libmcc-1.5") # platform-dependent
 
-	shell.append_compiler_flag(os.path.join(libfbi_pi_base, "include"),
+        shell.append_compiler_flag(os.path.join(libmcc_pi_base, "include"),
                                    "CPPFLAGS",
                                    prefix = "-I",
                                    path_checking = pyenv.ShellConstants.ENFORCE_PATH)
-        shell.append_path(os.path.join(libfbi_pi_base, "lib"), "PYTHON_EXTRA_PATH")
-        shell.append_path(os.path.join(libfbi_pi_base, "share", "aclocal"), "ACLOCAL_PATH")
+        shell.append_path(os.path.join(libmcc_pi_base, "lib"), "PYTHON_EXTRA_PATH")
+        shell.append_path(os.path.join(libmcc_pi_base, "share", "aclocal"), "ACLOCAL_PATH")
 
-        shell.append_path(os.path.join(libfbi_pd_base, "lib"), "LD_LIBRARY_PATH")
-        shell.append_compiler_flag(os.path.join(libfbi_pd_base, "lib"),
+        shell.append_path(os.path.join(libmcc_pd_base, "lib"), "LD_LIBRARY_PATH")
+        shell.append_compiler_flag(os.path.join(libmcc_pd_base, "lib"),
                                    "LDFLAGS",
                                    prefix = "-L",
                                    path_checking = pyenv.ShellConstants.ENFORCE_PATH)
-        shell.append_path(os.path.join(libfbi_pd_base, "lib", "pkgconfig"), "PKG_CONFIG_PATH")
 
         # aclocal is weird.  even on a remove, we may need to forcibly set it.
         if ("ACLOCAL_PATH" in shell.paths and
             len(shell.paths['ACLOCAL_PATH']) != 0):
-            shell.environment_variables['ACLOCAL'] = ("aclocal %s" %
+            shell.environment_variables['ACLOCAL'] = ("aclocal %s" % 
                                                       (" ".join(["-I %s" % path
                                                                  for path in shell.paths['ACLOCAL_PATH']])))
         else:

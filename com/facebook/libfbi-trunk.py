@@ -8,8 +8,8 @@ class Module(pyenv.Module):
     def preload(self, env):
         # conflict checking
         for module_name in env.loaded_modules:
-            if (module_name.startswith("com.facebook.libch")):
-                raise pyenv.ModulePreloadError("Cannot load two libch modules at the same time")
+            if (module_name.startswith('com.facebook.libfbi')):
+                raise pyenv.ModulePreloadError("Cannot load two libfbi modules at the same time")
 
         return []
 
@@ -24,18 +24,19 @@ class Module(pyenv.Module):
             ostype is None):
             raise pyenv.ModuleLoadError("Cannot determine machine type or os type")
 
-        libch_pi_base = os.path.join(home, "software", "libch-3.0") # platform-independent
-        libch_pd_base = os.path.join(home, "software", "%s-%s" % (machtype, ostype),
-                                     "libch-3.0") # platform-dependent
+        libfbi_pi_base = os.path.join(home, "software", "libfbi-trunk") # platform-independent
+        libfbi_pd_base = os.path.join(home, "software", "%s-%s" % (machtype, ostype),
+                                     "libfbi-trunk") # platform-dependent
 
-        shell.append_compiler_flag(os.path.join(libch_pi_base, "include"),
+	shell.append_compiler_flag(os.path.join(libfbi_pi_base, "include"),
                                    "CPPFLAGS",
                                    prefix = "-I",
                                    path_checking = pyenv.ShellConstants.ENFORCE_PATH)
-        shell.append_path(os.path.join(libch_pi_base, "share", "aclocal"), "ACLOCAL_PATH")
+        shell.append_path(os.path.join(libfbi_pi_base, "lib"), "PYTHON_EXTRA_PATH")
+        shell.append_path(os.path.join(libfbi_pi_base, "share", "aclocal"), "ACLOCAL_PATH")
 
-        shell.append_path(os.path.join(libch_pd_base, "lib"), "LD_LIBRARY_PATH")
-        shell.append_compiler_flag(os.path.join(libch_pd_base, "lib"),
+        shell.append_path(os.path.join(libfbi_pd_base, "lib"), "LD_LIBRARY_PATH")
+        shell.append_compiler_flag(os.path.join(libfbi_pd_base, "lib"),
                                    "LDFLAGS",
                                    prefix = "-L",
                                    path_checking = pyenv.ShellConstants.ENFORCE_PATH)
@@ -53,4 +54,3 @@ class Module(pyenv.Module):
 
     def unload(self, env, shell):
         pyenv.Module.unload_by_reversal(self, env, shell)
-

@@ -2,7 +2,7 @@ import pyenv
 
 class Module(pyenv.Module):
     def __init__(self, name):
-        pyenv.Module.__init__(self, name)
+        super(Module, self).__init__(name)
 
 
     def preload(self, env):
@@ -24,4 +24,4 @@ class Module(pyenv.Module):
 
 
     def unload(self, env, shell):
-        pyenv.Module.unload_by_reversal(self, env, shell)
+        self.unload_by_reversal(env, shell)

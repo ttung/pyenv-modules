@@ -2,7 +2,7 @@ import pyenv
 
 class Module(pyenv.Module):
     def __init__(self, name):
-        pyenv.Module.__init__(self, name)
+        super(Module, self).__init__(name)
 
 
     def preload(self, env):

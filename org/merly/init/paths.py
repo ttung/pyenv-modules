@@ -29,8 +29,8 @@ class Module(pyenv.Module):
             compat_machtype.append("i386") # x86-64 can run i386 binaries.
         if (ostype == "FreeBSD"):
             compat_ostype.append("Linux") # freebsd has the linux compatibility layer.
-        if (ostype == "Darwin" and machtype == "i386"):
-            compat_machtype.append("powerpc") # macosx has rosetta, allowing it to run ppc binaries.
+        if (ostype == "Darwin" and machtype == "arm64"):
+            compat_machtype.append("x86_64")  # macosx has rosetta2, allowing it to run x86_64 binaries.
 
         # reset the paths
         shell.reset_path("PATH")
